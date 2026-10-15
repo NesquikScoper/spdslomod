@@ -16,15 +16,6 @@
     // Add your custom code here.
   };
 
-  var TITLE = "Slovenian Liberalism: A Story of Decline" + '_' + "Srdjan Veljancic";
-
-  // the url is a link to game.json
-  // test url: https://aucchen.github.io/social_democracy_mods/v0.1.json
-  // TODO; 
-  window.loadMod = function(url) {
-      ui.loadGame(url);
-  };
-
   window.showStats = function() {
     if (window.dendryUI.dendryEngine.state.sceneId.startsWith('library')) {
         window.dendryUI.dendryEngine.goToScene('backSpecialScene');
@@ -33,61 +24,6 @@
     }
   };
 
-  window.showMods = function() {
-    window.hideOptions();
-    if (window.dendryUI.dendryEngine.state.sceneId.startsWith('mod_loader')) {
-        window.dendryUI.dendryEngine.goToScene('backSpecialScene');
-    } else {
-        window.dendryUI.dendryEngine.goToScene('mod_loader');
-    }
-  };
-
-  // TODO: update audio displays
-  window.updateAudio = function(song) {
-      var now_playing = document.getElementById('currently_playing');
-      if (song) {
-          var a = song.split('/');
-          now_playing.textContent = a[a.length-1];
-      } else {
-          var s = window.dendryUI.currentAudioURL;
-          var a = s.split('/');
-          now_playing.textContent = a[a.length-1];
-      }
-  };
-
-  // sets the volume
-  window.setVolume = function(volume) {
-      if (window.dendryUI.currentAudio) {
-          window.dendryUI.volume = volume/100;
-          window.dendryUI.currentAudio.volume = volume/100;
-      }
-  };
-
-  // go to the next song - this just sets the time to 9999 lol.
-  window.shuffle = function() {
-      if (window.dendryUI.currentAudio) {
-          window.dendryUI.currentAudio.currentTime = 9999;
-      }
-  };
-
-  // toggles pause or play of music
-  window.togglePausePlay = function() {
-      if (window.dendryUI.currentAudio) {
-          if (window.dendryUI.currentAudio.paused) {
-            window.dendryUI.currentAudio.play();
-            document.getElementById('pause-button-image').style.display = "inline";
-            document.getElementById('play-button-image').style.display = "none";
-            document.getElementById('pause-button');
-            document.getElementById('pause-button-text').textContent = "Pause";
-          } else {
-            window.dendryUI.currentAudio.pause();
-            document.getElementById('play-button-image').style.display = "inline";
-            document.getElementById('pause-button-image').style.display = "none";
-            document.getElementById('pause-button-text').textContent = "Play";
-          }
-      }
-  };
-  
   window.showOptions = function() {
       var save_element = document.getElementById('options');
       window.populateOptions();
@@ -108,18 +44,6 @@
       save_element.style.display = "none";
   };
 
-  window.disableBg = function() {
-      window.dendryUI.disable_bg = true;
-      document.body.style.backgroundImage = 'none';
-      window.dendryUI.saveSettings();
-  };
-
-  window.enableBg = function() {
-      window.dendryUI.disable_bg = false;
-      window.dendryUI.setBg(window.dendryUI.dendryEngine.state.bg);
-      window.dendryUI.saveSettings();
-  };
-
   window.disableAnimate = function() {
       window.dendryUI.animate = false;
       window.dendryUI.saveSettings();
@@ -127,26 +51,6 @@
 
   window.enableAnimate = function() {
       window.dendryUI.animate = true;
-      window.dendryUI.saveSettings();
-  };
-
-  window.disableAnimateBg = function() {
-      window.dendryUI.animate_bg = false;
-      window.dendryUI.saveSettings();
-  };
-
-  window.enableAnimateBg = function() {
-      window.dendryUI.animate_bg = true;
-      window.dendryUI.saveSettings();
-  };
-
-  window.disableAudio = function() {
-      window.dendryUI.toggle_audio(false);
-      window.dendryUI.saveSettings();
-  };
-
-  window.enableAudio = function() {
-      window.dendryUI.toggle_audio(true);
       window.dendryUI.saveSettings();
   };
 
@@ -173,24 +77,12 @@
 
   // populates the checkboxes in the options view
   window.populateOptions = function() {
-    var disable_bg = window.dendryUI.disable_bg;
     var animate = window.dendryUI.animate;
-    var disable_audio = window.dendryUI.disable_audio;
     var show_portraits = window.dendryUI.show_portraits;
-    if (disable_bg) {
-        $('#backgrounds_no')[0].checked = true;
-    } else {
-        $('#backgrounds_yes')[0].checked = true;
-    }
     if (animate) {
         $('#animate_yes')[0].checked = true;
     } else {
         $('#animate_no')[0].checked = true;
-    }
-    if (disable_audio) {
-        $('#audio_no')[0].checked = true;
-    } else {
-        $('#audio_yes')[0].checked = true;
     }
     if (show_portraits) {
         $('#images_yes')[0].checked = true;
@@ -218,7 +110,8 @@
   // This function runs on a new page. Right now, this auto-saves.
   window.onNewPage = function() {
     var scene = window.dendryUI.dendryEngine.state.sceneId;
-    if (scene != 'root' && !window.justLoaded) {
+    // no autosave before a game has started: the title screen and "How to play" would overwrite the slots with an empty game
+    if (scene != 'root' && !window.justLoaded && window.dendryUI.dendryEngine.state.qualities.started) {
         window.dendryUI.autosave();
     }
     if (window.justLoaded) {
@@ -234,6 +127,7 @@
       var displayContent = dendryUI.dendryEngine._makeDisplayContent(scene.content, true);
       $('#qualities').append(dendryUI.contentToHTML.convert(displayContent));
       if (window.SLO_UI) { window.SLO_UI.fill(); }
+      if (window.SLO_WIKI) { window.SLO_WIKI.annotate(document.getElementById('qualities')); }
   };
 
   window.changeTab = function(newTab, tabId) {
@@ -250,6 +144,9 @@
   window.onDisplayContent = function() {
       window.updateSidebar();
       if (window.SLO_UI) { window.SLO_UI.fill(); }
+      // names and terms in the text become hover terms that open the wiki;
+      // check() announces entries that this page's events revealed or changed
+      if (window.SLO_WIKI) { window.SLO_WIKI.check(); window.SLO_WIKI.annotate(document.getElementById('content')); }
   };
 
   // Open a card's tooltip to the left when it would run off the right edge.
@@ -268,36 +165,6 @@
       if (room < (tip.offsetWidth || 180) + 20) { tip.classList.add('tip-left'); }
   });
 
-  /*
-   * This function copied from the code for Infinite Space Battle Simulator
-   *
-   * quality - a number between max and min
-   * qualityName - the name of the quality
-   * max and min - numbers
-   * colors - if true/1, will use some color scheme - green to yellow to red for high to low
-   * */
-  window.generateBar = function(quality, qualityName, max, min, colors) {
-      var bar = document.createElement('div');
-      bar.className = 'bar';
-      var value = document.createElement('div');
-      value.className = 'barValue';
-      var width = (quality - min)/(max - min);
-      if (width > 1) {
-          width = 1;
-      } else if (width < 0) {
-          width = 0;
-      }
-      value.style.width = Math.round(width*100) + '%';
-      if (colors) {
-          value.style.backgroundColor = window.probToColor(width*100);
-      }
-      bar.textContent = qualityName + ': ' + quality;
-      if (colors) {
-          bar.textContent += '/' + max;
-      }
-      bar.appendChild(value);
-      return bar;
-  };
 
 
   window.justLoaded = true;
@@ -326,7 +193,7 @@
   }
 
   window.onload = function() {
-    window.dendryUI.loadSettings({show_portraits: false});
+    window.dendryUI.loadSettings({show_portraits: true});
     if (window.dendryUI.dark_mode) {
         document.body.classList.add('dark-mode');
     }

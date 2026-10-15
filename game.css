@@ -554,44 +554,6 @@ table {
     border-spacing: 0.5em;
 }
 
-/* Styles for parties */
-.seat.kpd {
-    fill: #8B0000;
-}
-.seat.spd {
-    fill: #E3000F;
-    stroke: var(--border-color);
-    stroke-width: 1.5px;
-}
-.seat.ddp {
-    fill: #DCCA4A;
-}
-.seat.z {
-    fill: #000;
-}
-.seat.bvp {
-    fill: #69A2BE;
-}
-.seat.dvp {
-    fill: #D5AC27;
-}
-.seat.other {
-    fill: #909090;
-}
-.seat.dnvp {
-    fill: #3F7BC1;
-}
-.seat.nsdap {
-    fill: #954B00;
-}
-.seat.sapd {
-    fill: #C40000;
-}
-/* Giving them NDP colors, idk */
-.seat.srpd {
-    fill: #F4A460;
-}
-
 .tooltip-text {
     text-decoration: underline;
     text-decoration-style: dotted;
@@ -718,3 +680,69 @@ a.card:focus .card-tooltip, a.card:hover .card-tooltip { display: block; animati
   li:hover > a.card, a.card:focus-visible, a.card:active { transform: none; }
   a.card:focus .card-tooltip, a.card:hover .card-tooltip { animation: none; }
 }
+
+/* --- Wiki: hover terms and the wiki window (wiki.js) --- */
+.wiki-term { text-decoration: underline dotted; text-underline-offset: 3px; text-decoration-color: var(--link-color); cursor: help; border-radius: 2px; }
+.wiki-term:hover, .wiki-term:focus-visible { background: var(--link-hover-color); outline: none; }
+.wiki-tip {
+  max-width: 300px; padding: 0.6em 0.75em; box-sizing: border-box; overflow: hidden;
+  background: var(--content-bg-color); color: var(--text-color);
+  border: 1px solid var(--card-border-color); border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(20, 40, 60, 0.22);
+  font-size: 0.9rem; line-height: 1.35; text-align: left;
+}
+#wiki-tip { display: none; position: fixed; z-index: 5; pointer-events: none; }
+.wiki-tip b { display: block; }
+.wiki-tip span { display: block; }
+.wiki-role { opacity: 0.75; font-size: 0.9em; }
+.wiki-tip .wiki-short { margin-top: 0.35em; }
+.wiki-tip .wiki-more { margin-top: 0.45em; opacity: 0.6; font-size: 0.85em; clear: both; }
+/* portraits are 5:7, like the cards */
+.wiki-portrait { float: right; aspect-ratio: 5 / 7; object-fit: cover; border-radius: 6px; border: 1px solid var(--card-border-color); }
+.wiki-tip .wiki-portrait { width: 52px; margin: 0 0 0.3em 0.6em; }
+#wiki-entry .wiki-portrait, .wiki-entry .wiki-portrait { width: 110px; margin: 0 0 0.8em 1.2em; }
+#wiki.overlay { z-index: 4; overflow: auto; }
+.wiki-window {
+  position: relative; display: flex; gap: 1.5em; max-width: 760px; height: min(560px, calc(100vh - 120px));
+  margin: 60px auto; padding: 1.2em 1.4em; box-sizing: border-box;
+  background: var(--content-bg-color); color: var(--text-color);
+  border: 1px solid var(--card-border-color); border-radius: 10px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+#wiki-index { flex: 0 0 180px; overflow-y: auto; font-size: 0.9em; }
+#wiki-index h4 { margin: 0.9em 0 0.3em 0; font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.65; }
+#wiki-index h4:first-child { margin-top: 0; }
+#wiki-index ul { list-style: none; margin: 0; padding: 0; }
+#wiki-index a { display: block; padding: 0.15em 0.4em; border-radius: 4px; color: var(--link-color); text-decoration: none; }
+#wiki-index a:hover { background: var(--link-hover-color); }
+#wiki-index a.current { background: var(--tab-bg-color); color: var(--text-color); font-weight: 600; }
+#wiki-entry { flex: 1 1 auto; overflow-y: auto; padding: 2.2em 0.4em 0 0; line-height: 1.5; }
+#wiki-entry h3, .wiki-entry h3 { margin: 0 0 0.2em 0; text-align: left; letter-spacing: 0; font-size: 1.4em; }
+#wiki-entry h4, .wiki-entry h4 { margin: 1.1em 0 0.3em 0; text-align: left; letter-spacing: 0; font-size: 1.05em; }
+#wiki-entry p, .wiki-entry p { margin: 0 0 0.8em 0; text-indent: 0; }
+#wiki-entry ul, .wiki-entry ul { margin: 0 0 0.8em 0; padding-left: 1.3em; }
+#wiki-entry a, .wiki-entry a { color: var(--link-color); }
+.wiki-kind { font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.6; }
+.wiki-close { position: absolute; top: 0.9em; right: 1em; font: inherit; font-size: 0.85em; padding: 0.25em 0.7em; cursor: pointer;
+  background: var(--tab-bg-color); color: var(--text-color); border: 1px solid var(--card-border-color); border-radius: 6px; }
+.wiki-close:hover { background: var(--tab-hover-color); }
+@media screen and (max-width: 640px) {
+  .wiki-window { flex-direction: column; margin: 12px; height: calc(100vh - 24px); gap: 0.8em; }
+  #wiki-index { flex: 0 0 30%; }
+  #wiki-entry { padding-top: 0; }
+}
+/* pop-ups for revealed and updated wiki entries */
+#wiki-toasts { position: fixed; right: 16px; bottom: 16px; z-index: 6; display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
+.wiki-toast {
+  display: block; width: 280px; max-width: calc(100vw - 32px); padding: 0.65em 0.85em; text-align: left; cursor: pointer;
+  font: inherit; font-size: 0.9rem; line-height: 1.35;
+  background: var(--content-bg-color); color: var(--text-color);
+  border: 1px solid var(--card-border-color); border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(20, 40, 60, 0.28);
+  animation: slo-tip-in 0.2s ease-out;
+}
+.wiki-toast:hover { background: var(--tab-hover-color); }
+.wiki-toast b, .wiki-toast span { display: block; }
+.wiki-toast .wiki-note { opacity: 0.8; }
+.wiki-fresh { font-size: 0.75em; padding: 0 0.45em; border-radius: 999px; background: #1b6a96; color: #fff; font-weight: 600; vertical-align: 1px; }
+@media (prefers-reduced-motion: reduce) { .wiki-toast { animation: none; } }

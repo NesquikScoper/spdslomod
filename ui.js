@@ -51,7 +51,10 @@
     },
     issues: function(q) {
       var h = '';
-      window.SLO.topIssues(q, 6).forEach(function(i) {
+      // the six most talked-about issues, plus any with programme work under way
+      var list = window.SLO.topIssues(q, 6);
+      window.SLO.ISSUES.forEach(function(i) { if (q['own_progress_' + i] > 0 && list.indexOf(i) < 0) { list.push(i); } });
+      list.forEach(function(i) {
         var I = window.SLO.ISSUE[i], mine = q['pos_lms_' + i] || 0, line;
         if (I.valence) {
           var o = window.SLO.owner(q, i);
@@ -72,7 +75,7 @@
       var h = '';
       rows.forEach(function(r) {
         h += '<div class="slo-card"><b>' + r[1] + '</b> <span class="slo-num">' + Math.round(q[r[0]] || 0) + '</span>' + bar(q[r[0]] || 0, '#2c7fb8') +
-          '<span class="slo-dim">' + r[2] + (r[0] === 'rel_est' ? ((q.rel_est || 0) < 25 ? ' <b>Cold: it is looking for someone else to back, and the papers have turned.</b>' : ((q.rel_est || 0) >= 70 ? ' <b>Close: people are starting to say you are its creature.</b>' : '')) : '') + '</span></div>';
+          '<span class="slo-dim">' + r[2] + (r[0] === 'rel_est' ? ((q.rel_est || 0) < 25 ? ' <b>Cold: it is looking for someone else to back' + ((q.rel_est || 0) < 20 && q.in_government ? ', and the papers have turned' : '') + '.</b>' : ((q.rel_est || 0) >= 70 ? ' <b>Close: people are starting to say you are its creature.</b>' : '')) : '') + '</span></div>';
       });
       return h;
     },
@@ -115,8 +118,8 @@
       var names = window.SLO.PARTIES.filter(function(p) { return q['gov_' + p]; }).map(function(p) {
         return window.SLO.PARTY[p].name + ' (' + (q[p + '_r'] || 0) + ')'; });
       return '<div class="slo-card"><b>Coalition: ' + n + ' seats</b>' + (support ? ' + ' + support + ' from Levica\'s support agreement' : '') +
-        '<br>' + names.join(' + ') + bar((n + support) / 90 * 100, n + support >= 46 ? '#27ae60' : '#d68910') +
-        '<span class="slo-dim">46 of 90 needed to elect a prime minister.</span></div>';
+        '<br>' + names.join(' + ') + bar((n + support + 2) / 90 * 100, n + support + 2 >= 46 ? '#27ae60' : '#d68910') +
+        '<span class="slo-dim">' + (n + support + 2) + ' of 90 with the two minority MPs; 46 needed to elect a prime minister.</span></div>';
     }
   };
 

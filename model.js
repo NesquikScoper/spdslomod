@@ -166,6 +166,19 @@
   };
   /*SJM_ATT_END*/
 
+  // Taxation rests on proxy questions (income differences, socialism) that every group answers on the
+  // "higher taxes" side. Centre it on the electorate's mean so the stance is relative: the right and the
+  // self-employed lean to lower taxes, the left and pensioners to higher ones.
+  (function() {
+    var sum = 0, n = 0;
+    SLO.DEMOS.forEach(function(d) {
+      SLO.SEG_ST[d].forEach(function(st, b) { var w = SLO.SIZE[d] * SLO.SEG_SHARE[d][b]; sum += w * st.taxation; n += w; });
+    });
+    SLO.DEMOS.forEach(function(d) {
+      SLO.SEG_ST[d].forEach(function(st) { st.taxation = Math.round((st.taxation - sum / n) * 100) / 100; });
+    });
+  })();
+
   // derived per-group values for the sidebar and the challenger maths
   SLO.DEMOS.forEach(function(d) {
     var D = SLO.DEMO[d], t = 0;
@@ -196,16 +209,32 @@
   // Party numbers per issue, -2..+2. Valence: ownership. Positional: side and prominence.
   // order: healthcare jobs housing cost transport corruption pensions | migration privatisation taxation euroatlantic environment culture media
   var POS = {
-    lms:    [0, 0, 0, 0, 0, 1, 0,    0, 1, 0, 1, 1, 0, 1],
+    lms:    [0, 0, 0, 0, 0, 1, 0,    0, 0, 0, 1, 1, 0, 1],   // vague on privatisation until the NLB question
     sds:    [0, 1, 0, 0, 1, 0, 0,   -2, 1, 2, 2, -1, -2, -2],
     sd:     [1, 1, 1, 0, 0, 0, 1,    1, -1, -1, 1, 1, 1, 1],
     smc:    [-1, 1, 0, 0, -1, 0, 0,  0, 1, 1, 2, 0, 1, 1],
     levica: [1, 2, 2, 1, 0, 0, 0,    2, -2, -2, -2, 2, 2, 2],
-    nsi:    [1, 1, 0, 0, 0, 0, 0,   -1, 2, 2, 2, 0, -2, -1],
+    nsi:    [1, 1, 0, 0, 0, 0, 0,   -1, 2, 1, 2, 0, -1, -1],   // taxation and culture follow the ideology (IDEOLOGY)
     sab:    [0, 0, 0, 0, 0, 0, 1,    0, 0, 0, 1, 1, 1, 1],
     desus:  [1, 0, 0, 0, 0, 0, 2,    0, -1, 0, 1, 0, 0, 0],
     sns:    [0, 0, 0, 0, 0, 1, 0,   -2, -1, 0, -2, 0, -1, 0],
     other:  [0, 0, 0, 0, 0, 0, 0,    0, 0, 0, 0, 0, 0, 0]
+  };
+
+  // Ideology labels. A label can also set positions; changing it (SLO.ideology) moves the party there.
+  // The start label must match POS. In the demo only NSi changes: Tonin in March 2018, Pogorelec after the election.
+  SLO.IDEOLOGY = {
+    sd: 'Social democracy', smc: 'Modern liberalism', sab: 'Social liberalism', desus: "Pensioners' interests",
+    nsi: 'Christian democracy', sns: 'Slovenian nationalism', sds: 'Right-wing populism', levica: 'Democratic socialism'
+  };
+  SLO.IDEOLOGY_POS = {
+    'Christian democracy':    {taxation: 1, culture: -1},
+    'Christian conservatism': {taxation: 2, culture: -2}
+  };
+  SLO.ideology = function(Q, party, label) {
+    Q['ideology_' + party] = label;
+    var ps = SLO.IDEOLOGY_POS[label] || {};
+    Object.keys(ps).forEach(function(i) { Q['pos_' + party + '_' + i] = ps[i]; });
   };
 
   // Affinity priors (identity and loyalty), in appeal points, per group and bloc. Column order = SLO.PARTIES.
@@ -213,42 +242,42 @@
   /*AFF_BEGIN*/
   var AFF = {
     pensioners: [
-      [7.2, 1.7, 20.7, 10.9, 14.2, 0.5, 10.7, 5.7, 1.6, 3],
-      [9.5, 15.4, 9.1, 8.2, 1.3, 3.7, 4.7, 12, 1.1, 10.6],
-      [0.4, 66.8, 2.6, 2, 1.3, 19, 1, 9.7, 1.1, 8.9]],
+      [26.8, 3.9, 52.6, 27.5, 35.8, 4.9, 27.8, 15.8, 3, 7.3],
+      [12.8, 17.4, 12.3, 9.9, 1.7, 8.3, 6.9, 16.1, 0.1, 12.6],
+      [0.5, 64.7, 4, 1.9, 1.5, 21.2, 2, 11.6, 0.1, 8.7]],
     urban_prof: [
-      [7.3, 2.7, 11.8, 14.8, 38.1, 0.1, 8, 2.7, 0.6, 11.4],
-      [7.9, 14.5, 5.1, 12.1, 4.7, 3.7, 1.9, 4.5, 6.9, 14.6],
-      [0.1, 66.3, 1.5, 2.1, 0.3, 18.6, 5, 2.7, 1.9, 7.5]],
+      [8.8, 0.6, 13.3, 16, 40.2, 0.1, 9.7, 2.6, 0.2, 11.2],
+      [8.7, 11.3, 6.5, 12.4, 7.3, 5.3, 3.4, 4.3, 5.8, 13.7],
+      [0.2, 51.6, 2.8, 2.4, 0.1, 17.7, 5.4, 2.4, 1, 6.1]],
     rural_cath: [
-      [19.3, 7.1, 21.1, 18.5, 28.6, 0.4, 14.8, 3.6, 7.4, 15.7],
-      [5.2, 24.3, 5, 5, 1.2, 5, 1.3, 3.2, 5.3, 21.2],
-      [1.7, 84.2, 2.4, 1.4, 0.1, 37.8, 0.6, 1.9, 3.5, 17.8]],
+      [22.4, 5.7, 24.1, 22.6, 32.5, 4.2, 17.3, 4, 6.8, 17.4],
+      [5.7, 21.9, 6.2, 6.5, 2.1, 6.7, 1.6, 3.4, 2.8, 21.7],
+      [2, 82.9, 3.3, 2.6, 0.1, 39.2, 0.7, 2.2, 1.2, 18]],
     urban_prol: [
-      [12.7, 1.4, 10.6, 7.5, 27.6, 0.1, 4.5, 1.9, 0.9, 12.6],
-      [8.6, 17.5, 6.5, 4.3, 1, 6.1, 2, 3.9, 16.2, 9.6],
-      [0.1, 52.3, 5.2, 9.5, 0.3, 15.5, 4.7, 2.9, 2, 11.7]],
+      [13.2, 0.7, 10.9, 7.4, 28, 0.1, 4.9, 1.7, 0.3, 12.6],
+      [8.6, 16.2, 6.9, 4, 1.5, 9.2, 2.3, 3.8, 15.3, 9.3],
+      [0.1, 48.1, 5.4, 8.6, 1, 17.3, 4.7, 2.8, 1.1, 11]],
     suburban: [
-      [12.8, 7.2, 14.2, 22, 27.2, 1.6, 6.2, 1.1, 3.7, 5.5],
-      [10.1, 18, 8, 11.3, 2.3, 3.9, 5.8, 3.2, 14.7, 24.6],
-      [1, 82.6, 4.1, 1.7, 0.3, 23.3, 0.6, 2.2, 11.1, 25.9]],
+      [13.3, 5.5, 14.4, 23.4, 26.8, 4.5, 6.7, 1.2, 3, 5.5],
+      [10.7, 16.1, 8.3, 12.5, 1.4, 6.7, 6.2, 3.5, 13.9, 25.1],
+      [4.6, 119.9, 6.3, 3.4, 0.1, 36.9, 1.1, 3.6, 15.4, 38.3]],
     public: [
-      [38.6, 7.3, 43.4, 30.3, 61.3, 0.1, 22.5, 12.9, 4.6, 15.8],
-      [13.6, 32.3, 16.1, 22.4, 5.3, 1.6, 12.7, 5, 7, 21],
-      [1.4, 80.5, 4.1, 5.4, 0.3, 30.3, 0.6, 3, 3.6, 22.5]],
+      [39.4, 6, 43.9, 30.2, 61.6, 0.1, 23.4, 13.2, 4.4, 15.7],
+      [14.2, 30.6, 16.7, 21.9, 5.7, 3.7, 13.4, 5.4, 6.3, 20.9],
+      [1.9, 78.6, 4.7, 4.5, 0.2, 32.7, 1, 3.6, 2.8, 22.4]],
     self_emp: [
-      [7.1, 1, 14.9, 30.2, 29.4, 0.1, 10.2, 1.5, 0.6, 2.6],
-      [12.8, 17.8, 16.9, 11.8, 2.7, 5.8, 4.2, 3.8, 11.2, 14.5],
-      [0.1, 108.7, 1.9, 13.4, 0.4, 34.8, 7, 3.8, 2.6, 10.4]],
+      [7.4, 0.5, 14.9, 31.1, 28.9, 0.1, 10.6, 1.2, 0.3, 2.6],
+      [13.3, 17.3, 16.9, 12.8, 1.6, 7, 4.5, 3.6, 10.3, 14.7],
+      [1.2, 129.8, 2, 16.8, 0.1, 42.5, 8.5, 4.5, 2.3, 12.5]],
     youth: [
-      [10, 2.6, 15.4, 15, 49.9, 0.1, 5.5, 1.4, 0.6, 19.3],
-      [7.2, 18.9, 9, 8.6, 2.1, 6.5, 2.3, 2.3, 4.9, 14.4],
-      [1.8, 104.5, 3.1, 12.5, 0.1, 34.5, 0.9, 7.4, 12.5, 35.4]]
+      [10.8, 1.6, 16.2, 15.5, 51.1, 0.1, 6.6, 1.1, 0.2, 19.1],
+      [7.4, 16.8, 9.4, 8.5, 4, 9.9, 3.1, 2, 4.3, 13.6],
+      [2.1, 94.4, 3.8, 11.6, 0.1, 34.4, 1.6, 6.7, 10.5, 32.5]]
   };
   /*AFF_END*/
   SLO.AFF = AFF;
   // Per-party multipliers fitted last by tools/calibrate.js so the national total gives the 2018 result.
-  /*AFF_SCALE*/ SLO.AFF_SCALE = [0.8697, 1.1280, 0.9091, 0.9610, 1.0424, 1.1699, 0.9265, 0.8711, 0.9836, 0.9938];
+  /*AFF_SCALE*/ SLO.AFF_SCALE = [0.8816, 1.1342, 0.9092, 0.9578, 1.0309, 1.1357, 0.8886, 0.9043, 0.9755, 1.0013];
   SLO.TARGET_2018 = {lms: 12.6, sds: 24.9, sd: 9.9, smc: 9.8, levica: 9.3, nsi: 7.2, sab: 5.1, desus: 4.9, sns: 4.2, other: 12.1};
 
   // Latent challengers by trigger issue.
@@ -296,6 +325,7 @@
   })();
   SLO.SEATS = 88;
   SLO.THRESHOLD = 4;
+  SLO.POLL_MOE = 3.5;   // margin of error of the polls, in points, for a party at 50%
   SLO.PRESSURE_THRESHOLD = 1.0;
   SLO.CHALLENGER_WINDOW = 6;   // a new face appears only this many months or fewer before a scheduled election
 
@@ -318,6 +348,7 @@
       }
     }
     SLO.normaliseSalience(Q);
+    Object.keys(SLO.IDEOLOGY).forEach(function(pp) { Q['ideology_' + pp] = SLO.IDEOLOGY[pp]; });
     for (d = 0; d < SLO.DEMOS.length; d++) {
       Q['mood_' + SLO.DEMOS[d]] = 0;
       for (p = 0; p < SLO.PARTIES.length; p++) {
@@ -387,7 +418,8 @@
           if (Q['gov_' + p]) {
             var blame = (Q.pm_party === p) ? 1 : 0.4;
             if (p === 'lms') { blame *= (1 - num(Q.roots) / 200); }
-            a += K_GOV * mood * blame;
+            // in the campaign the outgoing cabinet takes the blame for a sour mood but no credit for a good one
+            a += K_GOV * (Q.in_campaign ? Math.min(0, mood) : mood) * blame;
           }
           if (p === 'lms') {
             a += num(Q.roots) * 0.06;
@@ -430,8 +462,22 @@
   };
 
   // Election: D'Hondt over SLO.SEATS with a 4% threshold. Two minority seats are added by the UI.
-  SLO.election = function(Q) {
+  // pollError: the polls were off. Each party's result is drawn around its poll figure with the margin of error
+  // of a survey of that size (POLL_MOE points for a party at 50%, less for small ones), then all are rescaled to 100.
+  SLO.election = function(Q, pollError) {
     SLO.recompute(Q);
+    if (pollError) {
+      var sum = 0, drawn = {};
+      SLO.PARTIES.forEach(function(pp) {
+        var v = num(Q[pp + '_votes']), moe = SLO.POLL_MOE * Math.sqrt(v * (100 - v)) / 50;
+        // a normal draw (Box-Muller); 95% of draws fall within the margin, and none beyond 1.5 times it
+        var z = Math.sqrt(-2 * Math.log(1 - Math.random())) * Math.cos(2 * Math.PI * Math.random());
+        Q[pp + '_poll'] = v;
+        drawn[pp] = Math.max(0.1, v + clamp(z / 1.96, -1.5, 1.5) * moe);
+        sum += drawn[pp];
+      });
+      SLO.PARTIES.forEach(function(pp) { Q[pp + '_votes'] = Math.round(drawn[pp] / sum * 1000) / 10; });
+    }
     var seats = {}, eligible = [], n = 0, p, best, bestQ, q;
     SLO.PARTIES.forEach(function(pp) {
       Q['old_' + pp + '_r'] = num(Q[pp + '_r']);
@@ -480,6 +526,7 @@
   };
   // One qualifying step toward +1 ownership for LMŠ. Three steps make a point. Returns true on a gain.
   SLO.claim = function(Q, issue) {
+    if (!SLO.ISSUE[issue].valence) { return false; }   // credibility exists only on who-delivers issues
     if (num(Q['cooldown_' + issue]) > 0) { return false; }
     if (num(Q['pos_lms_' + issue]) >= 2) { return false; }
     Q['own_progress_' + issue] = num(Q['own_progress_' + issue]) + 1;
@@ -518,15 +565,21 @@
 
   // ---------------------------------------------------------------- monthly tick
   SLO.pressure = function(Q, issue) {
-    var sum = 0;
+    // the liberal and centre-left parties a new face would replace
+    var LIB = ['lms', 'sd', 'smc', 'sab'], valence = SLO.ISSUE[issue].valence, own = 0, sum = 0;
+    if (valence) { LIB.forEach(function(p) { own = Math.max(own, num(Q['pos_' + p + '_' + issue])); }); }
     SLO.DEMOS.forEach(function(d) {
-      var D = SLO.DEMO[d];
-      sum += D.size * (D.w[issue] || 0) * Math.max(0, -num(Q['mood_' + d])) / 100;
+      var D = SLO.DEMO[d], rep = clamp(own, 0, 2) / 2;   // who-delivers: a credible owner
+      if (!valence) {
+        // which-side: a liberal party standing on the side this group leans to
+        var st = 0;
+        SLO.BLOCS.forEach(function(bn, b) { st += SLO.SEG_SHARE[d][b] * (SLO.SEG_ST[d][b][issue] || 0); });
+        rep = 0;
+        LIB.forEach(function(p) { rep = Math.max(rep, clamp(num(Q['pos_' + p + '_' + issue]) / 2 * st, 0, 1)); });
+      }
+      sum += D.size * (D.w[issue] || 0) * Math.max(0, -num(Q['mood_' + d])) / 100 * (1 - rep);
     });
-    // credible owners: the liberal and centre-left parties a new face would replace
-    var own = 0;
-    ['lms', 'sd', 'smc', 'sab'].forEach(function(p) { own = Math.max(own, num(Q['pos_' + p + '_' + issue])); });
-    return num(Q['sal_' + issue]) * sum * (1 - clamp(own, 0, 2) / 2);
+    return num(Q['sal_' + issue]) * sum;
   };
 
   SLO.tick = function(Q) {
@@ -546,6 +599,10 @@
     if (Q.in_government) {
       Q.coalition_strain = num(Q.coalition_strain) + 1;
       if (Q.levica_support) { Q.levica_agreement = num(Q.levica_agreement) - 2; }
+      // mayors drift away from a party busy in Ljubljana unless someone tends them (mayors_drift fires under 40)
+      Q.rel_mayors = clamp(num(Q.rel_mayors) - 1.5, 0, 100);
+      // without 46 votes (no_majority, set in post_event) every vote has to be bought
+      if (Q.no_majority) { Q.coalition_strain += 2; }
     }
     // the Establishment: cold means hostile coverage and nobody smoothing things over; close means capture
     if (Q.in_government && num(Q.rel_est) < 20) {
