@@ -1,0 +1,30 @@
+Photo credits for the adviser portraits in this folder.
+Each is a crop of a Wikimedia Commons file, pixelated with scanlines (tools/portrait_crop.py); the licence of the original applies to the derived image.
+
+adv_bertoncelj.jpg: Andrej Bertoncelj. Andrej Bertoncelj-za splet.jpg, by STA, CC BY-SA 4.0. https://commons.wikimedia.org/wiki/File:Andrej_Bertoncelj-za_splet.jpg
+adv_crncec.jpg: Damir Črnčec. Dr._Damir_Črnčec,_državni_sekretar_(52184001146)_(cropped).jpg, by Vlada Republike Slovenije from Ljubljana, Slovenia, Public domain. https://commons.wikimedia.org/wiki/File:Dr._Damir_%C4%8Crn%C4%8Dec,_dr%C5%BEavni_sekretar_(52184001146)_(cropped).jpg
+adv_golobic.jpg: Gregor Golobič. Gregor_Golobic.jpg, by Вени Марковски, CC BY 3.0. https://commons.wikimedia.org/wiki/File:Gregor_Golobic.jpg
+adv_joveva.jpg: Irena Joveva. JovevaEP.jpg, by Missjr92, CC BY-SA 4.0. https://commons.wikimedia.org/wiki/File:JovevaEP.jpg
+adv_heferle.jpg: Tina Heferle. Tina_Heferle.jpg, by Tinaheferle, CC BY-SA 4.0. https://commons.wikimedia.org/wiki/File:Tina_Heferle.jpg
+
+adv_kralj.jpg: Brane Kralj, (c) Robert Balen, 2019.
+adv_golubovic.jpg: Brane Golubović, (c) Uroš Hočevar/Delo, 2022.
+
+Wiki portraits:
+wiki_cerar.jpg: Miro Cerar-za splet.jpg, by STA, CC BY-SA 4.0, 2018. https://commons.wikimedia.org/wiki/File:Miro_Cerar-za_splet.jpg
+wiki_zidan.jpg: Komemoracija v Dražgošah 2018 06.jpg, by Hladnikm, CC BY-SA 4.0, 2018. https://commons.wikimedia.org/wiki/File:Komemoracija_v_Dra%C5%BEgo%C5%A1ah_2018_06.jpg
+wiki_bratusek.jpg: Alenka Bratušek-za splet (cropped).jpg, by File:Alenka Bratušek-za splet.jpg: STA
+derivative work: Pv21, CC BY-SA 4.0, 2018. https://commons.wikimedia.org/wiki/File:Alenka_Bratu%C5%A1ek-za_splet_(cropped).jpg
+wiki_erjavec.jpg: Karl Erjavec (40280740281) (cropped).jpg, by EU2018BG Bulgarian Presidency, CC BY 2.0, 2018. https://commons.wikimedia.org/wiki/File:Karl_Erjavec_(40280740281)_(cropped).jpg
+wiki_mesec.jpg: Luka Mesec 02 (cropped).jpg, by Hladnikm, CC BY-SA 4.0, 2018. https://commons.wikimedia.org/wiki/File:Luka_Mesec_02_(cropped).jpg
+wiki_tonin.jpg: Matej Tonin Slovenija (cropped).jpg, by Slovenka90, CC BY-SA 4.0, 2016. https://commons.wikimedia.org/wiki/File:Matej_Tonin_Slovenija_(cropped).jpg
+wiki_novak.jpg: LjudmilaNovak 03 (cropped).jpg, by Alestrtni, CC BY-SA 4.0, 2017. https://commons.wikimedia.org/wiki/File:LjudmilaNovak_03_(cropped).jpg
+wiki_kucan.jpg: Milan Kučan EP (cropped).jpg, by © European Union 2000, Attribution, 2000. https://commons.wikimedia.org/wiki/File:Milan_Ku%C4%8Dan_EP_(cropped).jpg
+wiki_jenull.jpg: Jaša Jenull 03.jpg, by Hladnikm, CC BY-SA 4.0, 2022. https://commons.wikimedia.org/wiki/File:Ja%C5%A1a_Jenull_03.jpg
+wiki_jankovic.jpg: Zoran Jankovic 2021.jpg, by Yerpo, CC BY-SA 4.0, 2021. https://commons.wikimedia.org/wiki/File:Zoran_Jankovic_2021.jpg
+wiki_golob.jpg: Dr Robert Golob Predsednik Gibanja Svoboda foto Barbara Jakse Jersic IMG 2606.jpg, by BARBARA JAKŠE JERŠIČ, CC BY-SA 4.0, 2022. https://commons.wikimedia.org/wiki/File:Dr_Robert_Golob_Predsednik_Gibanja_Svoboda_foto_Barbara_Jakse_Jersic_IMG_2606.jpg
+wiki_pahor.jpg: Shinzo Abe and Borut Pahor at the Enthronement of Naruhito (1).jpg, by 内閣官房内閣広報室, CC BY 4.0, 2019. https://commons.wikimedia.org/wiki/File:Shinzo_Abe_and_Borut_Pahor_at_the_Enthronement_of_Naruhito_(1).jpg
+wiki_jansa.jpg: Janez Janša in Brussels 02.jpg, by gov.si, Public domain, 2020. https://commons.wikimedia.org/wiki/File:Janez_Jan%C5%A1a_in_Brussels_02.jpg
+wiki_jelincic.jpg: Zmago Jelinčič 2014.jpg, by NETTV SLOVENIJA, CC BY 3.0, 2014. https://commons.wikimedia.org/wiki/File:Zmago_Jelin%C4%8Di%C4%8D_2014.jpg
+wiki_pogorelec.jpg: 117. seja vlade 2011-01-20 01.JPG, by UKOM, CC BY 3.0, 2011. https://commons.wikimedia.org/wiki/File:117._seja_vlade_2011-01-20_01.JPG
+adv_sarec.jpg: Marjan Šarec. Marjan Šarec-za splet (cropped2).jpg, by STA, CC BY-SA 4.0, 2018. https://commons.wikimedia.org/wiki/File:Marjan_%C5%A0arec-za_splet_(cropped2).jpg

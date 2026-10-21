@@ -12,6 +12,7 @@ window.SLO_WIKI_DATA = {
   "jansa": {
     "kind": "person",
     "title": "Janez Janša",
+    "img": "img/wiki_jansa.jpg",
     "role": "Leader of SDS",
     "short": "Leader of the Slovenian Democratic Party since 1993 and prime minister in 2004–2008 and 2012–2013. The fixed point of the Slovenian right.",
     "body": "Most parties of the centre and left refuse to govern with him, which is why coalitions are built around whoever can keep him out. He returned as prime minister in March 2020."
@@ -19,36 +20,42 @@ window.SLO_WIKI_DATA = {
   "cerar": {
     "kind": "person",
     "title": "Miro Cerar",
+    "img": "img/wiki_cerar.jpg",
     "role": "Founder of SMC, prime minister 2014–2018",
     "short": "A law professor who won the 2014 election with a party six weeks old. He resigned in March 2018 and served as foreign minister under Šarec."
   },
   "zidan": {
     "kind": "person",
     "title": "Dejan Židan",
+    "img": "img/wiki_zidan.jpg",
     "role": "Leader of the Social Democrats",
     "short": "Leader of SD from 2014 to 2020 and a former agriculture minister. Speaker of the National Assembly during the Šarec government."
   },
   "bratusek": {
     "kind": "person",
     "title": "Alenka Bratušek",
+    "img": "img/wiki_bratusek.jpg",
     "role": "Leader of SAB, prime minister 2013–2014",
     "short": "The first woman to lead a Slovenian government. Her party carries her name; she was infrastructure minister under Šarec."
   },
   "erjavec": {
     "kind": "person",
     "title": "Karl Erjavec",
+    "img": "img/wiki_erjavec.jpg",
     "role": "Leader of DeSUS",
     "short": "Leader of the pensioners' party from 2005 to 2020 and a minister in almost every government of those years. Defence minister under Šarec."
   },
   "mesec": {
     "kind": "person",
     "title": "Luka Mesec",
+    "img": "img/wiki_mesec.jpg",
     "role": "Coordinator of Levica",
     "short": "The public face of Levica and an MP since 2014. He negotiated the support agreement that kept the Šarec government alive."
   },
   "tonin": {
     "kind": "person",
     "title": "Matej Tonin",
+    "img": "img/wiki_tonin.jpg",
     "role": "Leader of NSi from 2018",
     "short": "Took over New Slovenia in January 2018, aged thirty-four, and promised to take it above ten percent. From the Kamnik area, like Šarec.",
     "body": "After the June 2018 election the centre-left parties elected him Speaker while courting NSi for the coalition. NSi left the talks in July, and he lost the chair in August."
@@ -56,12 +63,14 @@ window.SLO_WIKI_DATA = {
   "novak": {
     "kind": "person",
     "title": "Ljudmila Novak",
+    "img": "img/wiki_novak.jpg",
     "role": "Leader of NSi 2008–2018",
     "short": "Brought New Slovenia back into parliament in 2011 and moved it toward the centre, clashing openly with Janša. She stepped down in January 2018."
   },
   "pogorelec": {
     "kind": "person",
     "title": "Janez Pogorelec",
+    "img": "img/wiki_pogorelec.jpg",
     "role": "Lawyer, member of the NSi executive until 2018",
     "short": "The most open advocate of an NSi independent of SDS. He argued that the right cannot take power while Janša leads it.",
     "body": "He was attacked for that view in media close to SDS. In September 2018 he left the party executive to become acting director of the government's Office for Legislation.",
@@ -76,13 +85,14 @@ window.SLO_WIKI_DATA = {
   "pahor": {
     "kind": "person",
     "title": "Borut Pahor",
+    "img": "img/wiki_pahor.jpg",
     "role": "President of the Republic 2012–2022",
     "short": "A former Social Democrat prime minister. As president he nominates the candidate for prime minister after an election; Šarec nearly unseated him in 2017."
   },
   "golubovic": {
     "kind": "person",
     "title": "Brane Golubović",
-    "role": "LMŠ secretary-general",
+    "role": "Head of the LMŠ parliamentary group",
     "img": "img/adv_golubovic.jpg",
     "short": "The organiser of LMŠ, later head of its parliamentary group. He counts votes, branches and members."
   },
@@ -96,12 +106,14 @@ window.SLO_WIKI_DATA = {
   "jelincic": {
     "kind": "person",
     "title": "Zmago Jelinčič",
+    "img": "img/wiki_jelincic.jpg",
     "role": "Leader of SNS",
     "short": "Founder and leader of the Slovenian National Party since 1991."
   },
   "jankovic": {
     "kind": "person",
     "title": "Zoran Janković",
+    "img": "img/wiki_jankovic.jpg",
     "role": "Mayor of Ljubljana",
     "short": "The new face of 2011: his party, Positive Slovenia, won the election weeks after it was founded and never governed under him.",
     "aliases": [
@@ -111,6 +123,7 @@ window.SLO_WIKI_DATA = {
   "golob": {
     "kind": "person",
     "title": "Robert Golob",
+    "img": "img/wiki_golob.jpg",
     "role": "The new face of 2022",
     "short": "An energy-company manager whose Freedom Movement won the 2022 election a few months after he took it over. LMŠ took 3.7 percent."
   },
@@ -118,7 +131,8 @@ window.SLO_WIKI_DATA = {
     "kind": "party",
     "title": "LMŠ",
     "role": "List of Marjan Šarec",
-    "short": "Your party. Founded in 2014 as a local list in Kamnik; in 2018 it has a famous leader, about three hundred members and no programme anyone could quote."
+    "short": "Your party. Founded in 2014 as a local list in Kamnik; in 2018 it has a famous leader, about three hundred members and no programme anyone could quote.",
+    "body": "**Patronage: none yet.** A new party with nobody in the state yet."
   },
   "sds": {
     "kind": "party",
@@ -132,14 +146,16 @@ window.SLO_WIKI_DATA = {
     "title": "SD",
     "role": "Social Democrats",
     "ideology": "Social democracy",
-    "short": "The old centre-left, heir to the League of Communists. Thousands of members, branches everywhere, and a place in half the governments since independence."
+    "short": "The old centre-left, heir to the League of Communists. Thousands of members, branches everywhere, and a place in half the governments since independence.",
+    "body": "**Patronage: established.** The party of the transition-era left, with local and state-company networks."
   },
   "smc": {
     "kind": "party",
     "title": "SMC",
     "role": "Modern Centre Party",
     "ideology": "Modern liberalism",
-    "short": "Founded in 2014 as the Party of Miro Cerar; it won 35 percent six weeks later. By 2018 it is what a new face looks like after four years in office."
+    "short": "Founded in 2014 as the Party of Miro Cerar; it won 35 percent six weeks later. By 2018 it is what a new face looks like after four years in office.",
+    "body": "**Patronage: thin.** A party of one leader and one term, with few people of its own."
   },
   "levica": {
     "kind": "party",
@@ -153,7 +169,8 @@ window.SLO_WIKI_DATA = {
         "note": "It has withdrawn its support for the government.",
         "short": "Against NATO, against privatisation, for a higher minimum wage. It supported the Šarec government from outside until it judged the agreement broken."
       }
-    ]
+    ],
+    "body": "**Patronage: none.** Never in government, and no corruption scandal on record: a clean partner, which is worth something."
   },
   "nsi": {
     "kind": "party",
@@ -174,21 +191,24 @@ window.SLO_WIKI_DATA = {
         "ideology": "Christian democracy",
         "short": "The smaller party of the right: pro-business and Catholic. Under Janez Pogorelec it is once again charting an independent course."
       }
-    ]
+    ],
+    "body": "**Patronage: established.** Church-linked and local networks, smaller in the state."
   },
   "sab": {
     "kind": "party",
     "title": "SAB",
     "role": "Party of Alenka Bratušek",
     "ideology": "Social liberalism",
-    "short": "A former prime minister's personal list, with five MPs."
+    "short": "A former prime minister's personal list, with five MPs.",
+    "body": "**Patronage: thin.** A party of one leader and one term, with few people of its own."
   },
   "desus": {
     "kind": "party",
     "title": "DeSUS",
     "role": "Democratic Party of Pensioners",
     "ideology": "Pensioners' interests",
-    "short": "In nearly every government since 1997, whatever its colour, and the cause of several collapses."
+    "short": "In nearly every government since 1997, whatever its colour, and the cause of several collapses.",
+    "body": "**Patronage: deep.** In almost every government since 1996, with its people in the pension fund, health insurance and state companies."
   },
   "sns": {
     "kind": "party",
@@ -203,6 +223,27 @@ window.SLO_WIKI_DATA = {
     "short": "Nobody in particular: the managers, lawyers, editors and former officials who have backed every liberal party since independence. It does not back losers.",
     "body": "In the game it is a relationship. Favours are cheap now and are called in later; staying too close makes you look like its creature, and staying too far sends it looking for someone else."
   },
+  "media": {
+    "kind": "term",
+    "title": "The media",
+    "short": "Slovenia's newspapers, television and news sites: the public broadcaster RTV, POP TV, Delo and Dnevnik, and the outlets close to SDS around Nova24TV.",
+    "body": "In the game it is a relationship. Friendly editors give a scandal a paragraph; hostile ones make it lead every bulletin. Exclusives for the big outlets and favours from the Establishment raise it. A cold Establishment wears it down month by month."
+  },
+  "civil_society": {
+    "kind": "term",
+    "title": "Civil society",
+    "short": "Environmental groups, youth organisations, tenants' and patients' initiatives and anti-corruption watchdogs. They organise well and resent being used.",
+    "body": "In the game it does not move votes directly. It decides how open letters and protests land: groups that trust the government write to it as friends, and groups that do not write for the press.",
+    "aliases": [
+      "NGOs"
+    ]
+  },
+  "mayors": {
+    "kind": "term",
+    "title": "Mayors and local lists",
+    "short": "The mayors of Slovenia's 212 municipalities, many elected on local lists rather than party tickets. Šarec was one: mayor of Kamnik from 2010.",
+    "body": "In the game they are LMŠ's regional reach. Field work through friendly mayors builds branches; a government busy in Ljubljana loses them a little every month."
+  },
   "udbomafija": {
     "kind": "term",
     "title": "Udbomafija",
@@ -216,6 +257,15 @@ window.SLO_WIKI_DATA = {
     "body": "Each drew the same liberal, centre-left voters, and each was dropped for the next. Breaking that cycle is the point of the game.",
     "aliases": [
       "new face"
+    ]
+  },
+  "leader_pull": {
+    "kind": "term",
+    "title": "Leader pull",
+    "short": "Šarec's personal appeal. It adds votes to LMŠ, feeds the rally to the government and keeps partners in line, but it fades every month in office, faster the higher it is.",
+    "body": "Interviews and public fights lift it; party-building usually costs a little of it. Votes won this way belong to Šarec, not to the party: the more of LMŠ's support rests on his pull, the less of it would survive his departure.",
+    "aliases": [
+      "personal pull"
     ]
   },
   "assembly": {
@@ -334,6 +384,7 @@ window.SLO_WIKI_DATA = {
   "kucan": {
     "kind": "person",
     "title": "Milan Kučan",
+    "img": "img/wiki_kucan.jpg",
     "role": "President of the Republic 1991–2002",
     "short": "The last leader of the Slovenian communists and the first president of independent Slovenia. To SDS he is the hidden centre of the transition left."
   },
@@ -405,6 +456,7 @@ window.SLO_WIKI_DATA = {
   "jenull": {
     "kind": "person",
     "title": "Jaša Jenull",
+    "img": "img/wiki_jenull.jpg",
     "role": "Theatre director and activist",
     "short": "One of the most visible organisers of the Friday bicycle protests against the Janša government.",
     "hidden": "wiki_jenull"
@@ -419,5 +471,46 @@ window.SLO_WIKI_DATA = {
       "Resnica"
     ],
     "hidden": "wiki_resnica"
+  },
+  "coalition_strain": {
+    "kind": "term",
+    "title": "Coalition strain",
+    "short": "How close the coalition is to breaking. It rises by itself every month in government, and faster in some cabinets than others.",
+    "body": "Shown as a word: calm, uneasy, strained, fractious, on the brink. On the brink, the coalition can collapse.\n\n## What raises it by itself, every month\n\n- Governing at all: a little every month.\n- No majority: more, unless someone is finding the votes one by one (Golubović's whip, Heferle's order paper).\n- A cold Establishment: more, while its goodwill is low.\n- A cabinet across the culture war: more, when NSi sits with the Social Democrats, SMC or SAB. The wider the gap, the faster it frays, and the partners' grassroots will start quarrels of their own.\n- A partner short-changed on ministries: a little more, for as long as it stays in the cabinet. Whether a partner is short-changed is settled when the ministries are divided, and again after a walkout.\n\n## What else moves it\n\nQuarrels, broken promises and cleaning up raise it, and so does going over a partner's minister in its own ministry. Concessions, summits, shared posts and Šarec's own negotiations lower it. Every way of lowering strain directly (Šarec's negotiations, summits, gifts to the partners, shared posts, favours) works less if another was used in the last six months: the coalition has heard it before. Sharing out posts also works less the more the partners already hold, including the ministries they got above their share.\n\nStrain is about the whole coalition. To keep one partner from walking out, spend time on that party: *Relations with the other parties*."
+  },
+  "cartel_party": {
+    "kind": "term",
+    "title": "Cartel party",
+    "short": "A party that has governed long enough to live off the state: its people sit in ministries, agencies and state companies. The game calls this patronage.",
+    "body": "The idea comes from the political scientists Richard Katz and Peter Mair (1995). Established parties, they argued, come to depend on the state more than on their members: on public money, on posts for their people, and on each other, since today's opposition is tomorrow's partner. They compete in elections and cooperate in keeping what they share.\n\nIn the game this is **patronage**, shown on each partner's name on the coalition card: deep (DeSUS), established (the Social Democrats, NSi), thin (SMC, SAB), none (Levica), none yet (LMŠ).\n\n## What it does\n\n- **Cleaning up costs more with partners who live off patronage.** The anti-corruption commission, the lobbying register and open competitions threaten their people, and they push back. Every post you hand them makes it worse.\n- **Their people embarrass the coalition.** Partners with deep networks are likelier to produce a scandal, and a commission with teeth finds more of them.\n\nIt is not the same thing as the Establishment, the network of interests behind the parties, nor as Udbomafija, the right's claim that the Communist-era secret police still runs the country. The cartel is the parties themselves.",
+    "aliases": [
+      "patronage"
+    ]
+  },
+  "spirit": {
+    "kind": "org",
+    "title": "SPIRIT Slovenija",
+    "short": "The public agency that pays out the economy ministry's grants for entrepreneurship, innovation and foreign investment.",
+    "body": "The Public Agency for Entrepreneurship, Internationalisation, Foreign Investments and Technology. It runs the calls and pays the grants; the economy ministry sets the priorities. In the game, whichever party holds the economy ministry decides who gets the money, and the agency is where that can come out.",
+    "aliases": [
+      "SPIRIT"
+    ]
+  },
+  "director_general": {
+    "kind": "term",
+    "title": "Director-general",
+    "short": "The senior civil servant who runs a directorate, one of the divisions of a Slovene ministry. Ministers come and go; directors-general usually stay.",
+    "aliases": [
+      "director-general",
+      "directors-general"
+    ]
+  },
+  "leben": {
+    "kind": "person",
+    "title": "Jure Leben",
+    "role": "SMC environment minister",
+    "short": "SMC's environment minister in the Šarec government. Earlier, as a state secretary, he ran the second-track railway project.",
+    "body": "In February 2019, e-mails published by 24ur suggested that the contract for a model of the second track had been arranged in advance. Leben said his conscience was clear and offered his resignation; Šarec accepted it on 27 February 2019, calling him the best environment minister in fifteen years. Simon Zajc, an SMC state secretary, succeeded him. Leben later left SMC.",
+    "hidden": "wiki_leben"
   }
 };

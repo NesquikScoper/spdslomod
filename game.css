@@ -570,8 +570,10 @@ body.dark-mode { background: linear-gradient(160deg, #1b2530 0%, #23221f 100%) f
 .slo-dim { opacity: 0.7; font-size: 0.9em; }
 .slo-bar { height: 7px; background: rgba(128,128,128,0.25); border-radius: 3px; margin: 3px 0; overflow: hidden; }
 .slo-bar-fill { height: 100%; border-radius: 3px; }
-.slo-card { border-left: 3px solid rgba(128,128,128,0.5); padding: 4px 0 4px 8px; margin: 0 0 10px 0; line-height: 1.35; }
-.slo-warn { border-left-color: #c0392b; }
+.slo-card { background: rgba(128,128,128,0.08); border-radius: 4px; padding: 6px 10px; margin: 0 0 10px 0; line-height: 1.35; }
+.slo-group { margin: 0.9em 0 0.3em 0; font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.65; text-align: left; }
+.slo-rel { margin: 0 0 6px 0; }
+.slo-warn { background: rgba(192,57,43,0.10); }
 .box { display: inline-block; width: 0.8em; height: 0.8em; vertical-align: middle; }
 
 /* --- 2010s look: sans-serif, muted LMŠ blue --- */
@@ -610,7 +612,7 @@ button, input, h1, h2, h3, ul.choices, .subtitle, #content, .tools { font-family
 h1, h2, h3 { font-weight: 600; letter-spacing: 0.04em; }
 #content h1, #qualities h1 { color: #1b5f87; }
 body.dark-mode #content h1, body.dark-mode #qualities h1 { color: #8fd0f2; }
-#content { border-top: 4px solid #2f8fc0; border-radius: 3px; }
+#content { border-radius: 3px; }
 .tools { border-radius: 3px; }
 .subtitle { font-style: normal; opacity: 0.8; }
 .tab_button { font-family: inherit; }
@@ -727,7 +729,9 @@ a.card:focus .card-tooltip, a.card:hover .card-tooltip { display: block; animati
   background: var(--tab-bg-color); color: var(--text-color); border: 1px solid var(--card-border-color); border-radius: 6px; }
 .wiki-close:hover { background: var(--tab-hover-color); }
 @media screen and (max-width: 640px) {
-  .wiki-window { flex-direction: column; margin: 12px; height: calc(100vh - 24px); gap: 0.8em; }
+  .wiki-window { flex-direction: column; margin: 12px; height: calc(100vh - 24px); gap: 0.8em; padding-top: 3.4em; }
+  /* its own strip above the index, clear of the scrollbar, and big enough for a thumb */
+  .wiki-close { top: 0.7em; right: 0.7em; z-index: 1; font-size: 1em; padding: 0.45em 1.1em; }
   #wiki-index { flex: 0 0 30%; }
   #wiki-entry { padding-top: 0; }
 }

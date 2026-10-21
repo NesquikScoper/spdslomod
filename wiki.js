@@ -91,7 +91,7 @@
     return out;
   };
 
-  var matcher = null, byAlias = null, builtFor = null;
+  var matcher = null, prefixed = false, byAlias = null, builtFor = null;
   function visibleKey() { return Object.keys(WIKI.ENTRIES).filter(WIKI.visible).join(','); }
   function build() {
     var aliases = [];
@@ -105,7 +105,15 @@
     // longest first, so "Slovenian Democratic Party" wins over "SD"
     aliases.sort(function(a, b) { return b.length - a.length; });
     var alt = aliases.map(function(a) { return a.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }).join('|');
-    matcher = alt ? new RegExp('(?<![\\p{L}\\p{N}])(' + alt + ')(?![\\p{L}\\p{N}])', 'gu') : null;
+    matcher = null; prefixed = false;
+    if (!alt) { return; }
+    try {
+      matcher = new RegExp('(?<![\\p{L}\\p{N}])(' + alt + ')(?![\\p{L}\\p{N}])', 'gu');
+    } catch (e) {
+      // no lookbehind (Safari before 16.4): match the character before as group 1 and skip it
+      matcher = new RegExp('(^|[^\\p{L}\\p{N}])(' + alt + ')(?![\\p{L}\\p{N}])', 'gu');
+      prefixed = true;
+    }
   }
   // call after changing ENTRIES at run time (the editor does)
   WIKI.refresh = function() { matcher = null; byAlias = null; };
@@ -120,7 +128,7 @@
     if (skipId) { seen[skipId] = 1; }
     Array.prototype.forEach.call(root.querySelectorAll('.wiki-term'), function(el) { seen[el.getAttribute('data-wiki')] = 1; });
     walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {acceptNode: function(n) {
-      return n.parentElement && n.parentElement.closest('a, button, h1, h2, h3, script, style, .wiki-term') ?
+      return n.parentElement && n.parentElement.closest('a, button, h1, h2, h3, script, style, .wiki-term, [data-tip]') ?
         NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
     }});
     while ((node = walker.nextNode())) { nodes.push(node); }
@@ -128,19 +136,20 @@
       var text = n.nodeValue, last = 0, m, id, frag = null, span;
       matcher.lastIndex = 0;
       while ((m = matcher.exec(text))) {
-        id = byAlias[m[1]];
+        var word = prefixed ? m[2] : m[1], at = m.index + (prefixed ? m[1].length : 0);
+        id = byAlias[word];
         if (seen[id]) { continue; }
         seen[id] = 1;
         if (!frag) { frag = document.createDocumentFragment(); }
-        frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+        frag.appendChild(document.createTextNode(text.slice(last, at)));
         span = document.createElement('span');
         span.className = 'wiki-term';
         span.setAttribute('data-wiki', id);
         span.setAttribute('tabindex', '0');
         span.setAttribute('role', 'button');
-        span.textContent = m[1];
+        span.textContent = word;
         frag.appendChild(span);
-        last = m.index + m[1].length;
+        last = at + word.length;
       }
       if (frag) {
         frag.appendChild(document.createTextNode(text.slice(last)));
@@ -154,7 +163,7 @@
     return esc(s)
       .replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>')
       .replace(/\*([^*]+)\*/g, '<i>$1</i>')
-      .replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+      .replace(/\[([^\]]+)\]\((https?:\/\/(?:[^()\s]|\([^()\s]*\))+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
   }
   WIKI.markdown = function(text) {
     var h = '';
@@ -203,8 +212,16 @@
   // ---------------------------------------------------------------- hover box
   var tip = null;
   function showTip(el) {
-    var E = WIKI.resolve(el.getAttribute('data-wiki')), r, left, top;
-    if (!E || el.closest('#wiki, .wiki-static')) { return; }
+    var E = null, r, left, top;
+    if (el.hasAttribute('data-tip')) {
+      // a stat or meter: data-tip-title (optional) and data-tip, plain text
+      E = {html: (el.getAttribute('data-tip-title') ? '<b>' + esc(el.getAttribute('data-tip-title')) + '</b>' : '') +
+        '<span class="wiki-short">' + esc(el.getAttribute('data-tip')) + '</span>' +
+        (el.hasAttribute('data-wiki-go') ? '<span class="wiki-more">Click for the wiki</span>' : '')};
+    } else {
+      E = WIKI.resolve(el.getAttribute('data-wiki'));
+      if (!E || el.closest('#wiki, .wiki-static')) { return; }
+    }
     if (!tip) {
       tip = document.createElement('div');
       tip.id = 'wiki-tip';
@@ -212,7 +229,7 @@
       tip.setAttribute('role', 'tooltip');
       document.body.appendChild(tip);
     }
-    tip.innerHTML = WIKI.tipHTML(E);
+    tip.innerHTML = E.html || WIKI.tipHTML(E);
     tip.style.display = 'block';
     r = el.getBoundingClientRect();
     left = Math.max(8, Math.min(r.left, document.documentElement.clientWidth - tip.offsetWidth - 8));
@@ -304,14 +321,14 @@
   // ---------------------------------------------------------------- events
   if (typeof document !== 'undefined' && document.addEventListener) {
     document.addEventListener('mouseover', function(e) {
-      var el = e.target.closest && e.target.closest('.wiki-term');
+      var el = e.target.closest && e.target.closest('.wiki-term, [data-tip]');
       if (el) { showTip(el); }
     });
     document.addEventListener('mouseout', function(e) {
-      if (e.target.closest && e.target.closest('.wiki-term')) { hideTip(); }
+      if (e.target.closest && e.target.closest('.wiki-term, [data-tip]')) { hideTip(); }
     });
     document.addEventListener('focusin', function(e) {
-      if (e.target.classList && e.target.classList.contains('wiki-term')) { showTip(e.target); }
+      if (e.target.classList && (e.target.classList.contains('wiki-term') || e.target.hasAttribute('data-tip'))) { showTip(e.target); }
     });
     document.addEventListener('focusout', hideTip);
     document.addEventListener('click', function(e) {
@@ -326,6 +343,10 @@
       if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('wiki-term')) {
         e.preventDefault();
         WIKI.open(e.target.getAttribute('data-wiki'));
+      } else if ((e.key === 'Enter' || e.key === ' ') && e.target.hasAttribute && e.target.hasAttribute('data-wiki-go') && e.target.hasAttribute('data-tip')) {
+        // a stat label with its own hover that also opens a wiki entry (ui.js, Politics tab)
+        e.preventDefault();
+        WIKI.open(e.target.getAttribute('data-wiki-go'));
       }
     });
   }

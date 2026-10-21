@@ -147,6 +147,7 @@
       // names and terms in the text become hover terms that open the wiki;
       // check() announces entries that this page's events revealed or changed
       if (window.SLO_WIKI) { window.SLO_WIKI.check(); window.SLO_WIKI.annotate(document.getElementById('content')); }
+      if (window.SLO_TEST) { window.SLO_TEST.fill(); }
   };
 
   // Open a card's tooltip to the left when it would run off the right edge.
