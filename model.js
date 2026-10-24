@@ -1,5 +1,5 @@
 /*
- * Vote model for "Slovenian Liberalism: A Story of Decline".
+ * Vote model for "Slovenian Liberalism: A Cycle of Decline".
  * Pure JS, no DOM: loaded in the browser as window.SLO and in Node by tools/.
  * All dynamic state lives in flat qualities on Q so .dry one-liners can touch it:
  *   mood_<demo>, sal_<issue>, pos_<party>_<issue>, aff_<demo>_<party>
